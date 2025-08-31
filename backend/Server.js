@@ -14,14 +14,14 @@ app.use(express.json()); // parse JSON bodies
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ MongoDB connection failed:", err));
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error("MongoDB connection failed:", err));
 
 // Import routes
-const cusRoutes = require(".../backend/Routes/cusRoutes");
-const invoiceRoutes = require("../backend/Routes/invoices");
-const AuthRoutes = require("../backend/Routes/AuthRoutes")
-const authMiddleware = require("../backend/Middleware/Auth")
+const cusRoutes = require("./Routes/cusRoutes");
+const invoiceRoutes = require("./Routes/invoices");
+const AuthRoutes = require("./Routes/AuthRoutes")
+const authMiddleware = require("./Middleware/Auth")
 
 // Use routes
 app.use("/api/auth", AuthRoutes)
