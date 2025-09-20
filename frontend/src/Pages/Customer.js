@@ -48,8 +48,10 @@ const Customer = ()=>{
 
     return(
         <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Customers</h2>
+            <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold">Customers</h2>
             <button onClick={()=> navigate("/customers/add")} className="bg-blue-500 text-white px-3 py-2 rounded">Add Customer</button>
+            </div>
             {Customers.length===0 ? (
                 <p className="text-gray-500">No Customers Found.</p>
             ) : (
@@ -70,7 +72,7 @@ const Customer = ()=>{
                                 <td className="p-3 border">{cust.phone}</td>
                                 <td className="p-3 border">{cust.company}</td>
                                 <td className="p-3 border">
-                                    <button onClick={()=> navigate(`/customer/edit/${cust._id}`)} className="mr-2 bg-yellow text-white px-3 py-1 rounded">Edit</button>
+                                    <button onClick={()=> navigate(`/customers/edit/${cust._id}`)} className="mr-2 bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
                                     <button onClick={()=> handleDelete(cust._id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
                                 </td>
                             </tr>

@@ -10,7 +10,12 @@ import AddCust from "./Pages/AddCustomer";
 import { useContext } from "react";
 import { AuthContext } from "./Context/AuthContext";
 import EditCustomer from "./Pages/EditCustomer";
-
+import AddInvoices from "./Pages/AddInvoices";
+import Leads from "./Pages/Leads";
+import AddLeads from "./Pages/AddLeads";
+import EditLeads from "./Pages/EditLeads";
+import EditInvoice from "./Pages/EditInvoice";
+import Profile from "./Pages/Profile";
 
 function App() {
    const {user} = useContext(AuthContext)
@@ -34,10 +39,15 @@ function App() {
              <Routes>
              <Route path="/" element={<Dashboard />} />
              <Route path="/customers" element={ <Customer />}/>
-             <Route path="Invoices" element = {<Invoices />} />
              <Route path="/customers/add" element = {user? <AddCust />: <Navigate to={"/login"}/>} />
-             <Route path="customers/edit" element = {<EditCustomer />} />
-             <Route path="*" element={<Navigate to={"/"} />}/>
+             <Route path="customers/edit/:id" element = {<EditCustomer />} />
+             <Route path="Invoices" element = {<Invoices />} />
+             <Route path="/invoices/add" element = {<AddInvoices />}/>
+             <Route path="invoices/edit/:id" element = {<EditInvoice />} />
+             <Route path="/Leads" element = {<Leads />} />
+             <Route path="/leads/add" element = {<AddLeads />} />
+             <Route path="/leads/edit/:id" element = {<EditLeads />} />
+              <Route path="/profile" element={<Profile />} />
        </Routes>
 
               </main>

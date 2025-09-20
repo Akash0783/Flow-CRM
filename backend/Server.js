@@ -22,12 +22,17 @@ const cusRoutes = require("./Routes/cusRoutes");
 const invoiceRoutes = require("./Routes/invoices");
 const AuthRoutes = require("./Routes/AuthRoutes")
 const authMiddleware = require("./Middleware/Auth")
+const leads = require("./Routes/leads")
+const Dashboard = require("./Routes/Dashboard")
+const Profile = require("./Routes/Profile")
 
 // Use routes
 app.use("/api/auth", AuthRoutes)
 app.use("/api/customers",  cusRoutes);
 app.use("/api/invoices",  invoiceRoutes);
-
+app.use("/api/leads", leads)
+app.use("/api/dashboard", Dashboard)
+app.use("/api/profile", Profile)
 // Test route
 app.get("/", (req, res) => {
   res.send("CRM Backend is running!");

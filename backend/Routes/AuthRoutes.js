@@ -3,10 +3,11 @@ const router = express.Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const User = require("../Models/User")
+const authMiddleware = require("../Middleware/Auth")
 
 const JWT_SECRET = "Akash123"
 
-router.post("/register", async(req, res)=>{
+router.post("/signup", async(req, res)=>{
     try{
         console.log("Incoming Request Body",req.body)
         const {username, email, password} = req.body
@@ -54,9 +55,22 @@ router.post("/login", async(req, res)=>{
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
 
 
-        res.json({message: "Login Successful", token})
+        res.json({message: "Login Successful", token, user: {id: user._id, username : user.username, email : user.email}})
     }catch(err){
         res.status(500).json({error: "Server error"})
+    }
+})
+
+router.get("/profile", async(req, res) => {
+    try{
+        const user  = await User.findById(req.user.id).select("-password")
+        if(!user){
+            return res.status(404).json({error: "User not found"})
+        }
+        res.json(user)
+    }catch(err){
+        console.error("Error fetching user: ", err.message)
+        res.status(500).json({error : "Server error"})
     }
 })
 
