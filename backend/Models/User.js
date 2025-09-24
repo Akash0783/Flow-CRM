@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
     },
     email: {
         type: String,
@@ -14,6 +13,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        enum: ["admin", "user"], // only two roles for now 
+        default:  "user" // new signups are normally bedefault
     },
     createdAt: {
         type: Date,

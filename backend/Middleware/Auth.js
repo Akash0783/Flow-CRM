@@ -28,4 +28,13 @@ function authMiddleware(req, res, next){
     }
 }
 
-module.exports = authMiddleware
+function roleMiddleware(requiredRole){
+    return(req,res,next) => {
+        if(!req.user || req.user.role !== requiredRole){
+            return res.status(403).json({error: "Access Denied: Insufficient permission"})
+        }
+        next()
+    }
+}
+
+module.exports ={roleMiddleware, authMiddleware}

@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const Router = express.Router()
 const Customer = require("../Models/Customer")
-const authMiddleware = require("../Middleware/Auth")
+const {authMiddleware} = require("../Middleware/Auth")
 
 function isValidObjectId(id){
     return mongoose.Types.ObjectId.isValid(id)

@@ -5,7 +5,7 @@ const leadSchema = new mongoose.Schema({
     email: {type: String},
     phone: {type: String},
     source: {type: String},
-    status: {type: String, enum: ["New", "Contacted", "Qualified", "Converted", "Lost"], default: "New"},
+    status: {type: String, enum: ["New", "In Progress", "Qualified", "Converted", "Lost"], default: "New"},
     createdAt: {type: Date, default: Date.now}
 })
 

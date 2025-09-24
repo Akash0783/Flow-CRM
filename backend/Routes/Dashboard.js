@@ -3,9 +3,9 @@ const router = express.Router()
 const Customer = require("../Models/Customer")
 const Invoice = require("../Models/Invoice")
 const Leads = require("../Models/Leads")
-const auth = require("../Middleware/Auth")
+const {authMiddleware} = require("../Middleware/Auth")
 
-router.get("/stats", auth,  async(req, res)=>{
+router.get("/stats", authMiddleware,  async(req, res)=>{
     try{
         const totalCustomers = await Customer.countDocuments()
         const totalInvoices = await Invoice.countDocuments()

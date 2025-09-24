@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const Invoice = require("../Models/Invoice")
-const authMiddleware = require("../Middleware/Auth")
+const {authMiddleware} = require("../Middleware/Auth")
 router.get("/", authMiddleware, async(req, res)=>{
     try{
         const invoices = await Invoice.find().populate("customer")
@@ -21,14 +21,31 @@ router.post("/", authMiddleware, async(req, res) => {
     }
 })
 
-router.put("/:id", authMiddleware, async(req, res)=>{
-    try{
-        const invoice = await Invoice.findByIdAndUpdate(req.params.id, req.body, {new:true})
-        res.json(invoice)
-    }catch(err){
-        res.status(400).json({error: err.message})
-    }
-})
+// GET invoice by ID
+router.get("/:id", authMiddleware, async (req, res) => {
+  try {
+    const invoice = await Invoice.findById(req.params.id).populate("customer");
+    if (!invoice) return res.status(404).json({ error: "Invoice not found" });
+    res.json(invoice);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// UPDATE invoice by ID
+router.put("/:id", authMiddleware, async (req, res) => {
+  try {
+    const updatedInvoice = await Invoice.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedInvoice) return res.status(404).json({ error: "Invoice not found" });
+    res.json(updatedInvoice);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
 router.delete("/:id", authMiddleware, async(req, res)=>{
     try{

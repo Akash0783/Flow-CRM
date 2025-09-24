@@ -2,10 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../Models/User");
-const auth = require("../Middleware/Auth");
+const {authMiddleware} = require("../Middleware/Auth");
 
 // Get current user profile
-router.get("/", auth, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -16,7 +16,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 // Update user profile
-router.put("/", auth, async (req, res) => {
+router.put("/", authMiddleware, async (req, res) => {
   try {
     const { name, email, avatar } = req.body;
 

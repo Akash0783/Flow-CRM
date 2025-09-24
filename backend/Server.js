@@ -14,8 +14,30 @@ app.use(express.json()); // parse JSON bodies
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
+  .then(async() => {
+    console.log("MongoDB Connected")
+    
+    const user = require("./Models/User")
+    const bcrypt = require("bcryptjs")
+
+    const adminExists = await user.findOne({role : "admin"})
+
+    if(!adminExists){
+      const hashedPassword = await bcrypt.hash("Admin@123", 10)
+      const adminUser = new user({
+        username : "admin",
+        email: "admin123@gmail.com",
+        password: hashedPassword,
+        role: "admin"
+    })
+    await adminUser.save()
+     console.log("✅ Default admin created: email=admin123@gmail.com, password=Admin@123");
+  }else{
+    console.log("ℹ️ Admin already exists");
+  }
+ })
   .catch((err) => console.error("MongoDB connection failed:", err));
+
 
 // Import routes
 const cusRoutes = require("./Routes/cusRoutes");
@@ -25,6 +47,7 @@ const authMiddleware = require("./Middleware/Auth")
 const leads = require("./Routes/leads")
 const Dashboard = require("./Routes/Dashboard")
 const Profile = require("./Routes/Profile")
+const Users = require("./Routes/userRoutes")
 
 // Use routes
 app.use("/api/auth", AuthRoutes)
@@ -33,6 +56,8 @@ app.use("/api/invoices",  invoiceRoutes);
 app.use("/api/leads", leads)
 app.use("/api/dashboard", Dashboard)
 app.use("/api/profile", Profile)
+app.use("/api/users", Users)
+
 // Test route
 app.get("/", (req, res) => {
   res.send("CRM Backend is running!");
