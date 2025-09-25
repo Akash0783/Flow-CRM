@@ -9,7 +9,13 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://flow-crm-1.onrender.com"  // replace with actual frontend URL
+  ],
+  credentials: true
+}));
+
 app.use(express.json()); // parse JSON bodies
 
 // Connect to MongoDB Atlas
