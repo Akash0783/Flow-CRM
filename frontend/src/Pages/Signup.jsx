@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import api from "../api";
 
 const Signup = () => {
   const { login } = useContext(AuthContext);
@@ -14,29 +15,17 @@ const Signup = () => {
 
     try {
       // Step 1: Signup request
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Signup failed");
+      await api.post("/auth/signup", { username, email, password });
 
       // Step 2: Auto-login after signup
-      const loginRes = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const loginData = await loginRes.json();
-      if (!loginRes.ok) throw new Error(loginData.error || "Login failed after signup");
+      const loginRes = await api.post("/auth/login", { email, password });
 
       // ✅ Call context login
-      login(loginData.user, loginData.token);
+      login(loginRes.data.user, loginRes.data.token);
+
     } catch (err) {
-      alert(err.message);
+      console.error(err);
+      alert(err.response?.data?.error || "Signup failed");
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 const AddCust = () => {
   const [name, setName] = useState("");
@@ -13,8 +13,7 @@ const AddCust = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        "http://localhost:5000/api/customers",
+      await api.post("customers",
         { name, email, phone, company },
         { headers: { Authorization: `Bearer ${token}` } }
       );

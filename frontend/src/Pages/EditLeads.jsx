@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 const EditLead = () => {
   const { id } = useParams();
@@ -17,7 +17,7 @@ const EditLead = () => {
     const fetchLead = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:5000/api/leads/${id}`, {
+        const res = await api.get(`/leads/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFormData({
@@ -44,7 +44,7 @@ const EditLead = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`http://localhost:5000/api/leads/${id}`, formData, {
+      await api.put(`/leads/${id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       navigate("/leads");

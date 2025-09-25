@@ -1,6 +1,6 @@
 // src/pages/Profile.js
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 const Profile = () => {
   const [user, setUser] = useState({ name: "", email: "", avatar: "" });
@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/profile", {
+        const res = await api.get("/api/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -29,8 +29,8 @@ const Profile = () => {
 
   const handleSave = async () => {
     try {
-      const res = await axios.put(
-        "http://localhost:5000/api/profile",
+      const res = await api.put(
+        "/api/profile",
         user,
         { headers: { Authorization: `Bearer ${token}` } }
       );

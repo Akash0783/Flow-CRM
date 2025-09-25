@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import api from "../api";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -12,19 +13,15 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      // axios request
+      const res = await api.post("/auth/login", { email, password });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Login failed");
+      // call context login
+      login(res.data.user, res.data.token);
 
-      // Call context login
-      login(data.user, data.token);
     } catch (err) {
-      alert(err.message);
+      console.error(err);
+      alert(err.response?.data?.error || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -33,7 +30,6 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 via-purple-100 to-pink-100">
       <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 overflow-hidden transform hover:scale-105 transition-transform duration-300">
-        {/* Gradient decorations */}
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-tr from-purple-400 to-pink-400 rounded-full opacity-30 blur-3xl"></div>
         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-tr from-blue-400 to-purple-400 rounded-full opacity-30 blur-3xl"></div>
 
