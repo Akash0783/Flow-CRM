@@ -14,6 +14,8 @@ const Signup = () => {
     setLoading(true);
 
     try {
+      console.log("Calling API:", API_BASE_URL + "/auth/signup");
+
       // Step 1: Signup request
       await api.post("/auth/signup", { username, email, password });
 
