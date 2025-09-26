@@ -11,7 +11,7 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: [
-    "https://flow-crm-frontend.onrender.com"  // replace with actual frontend URL
+    "https://flow-crm-oiwd.onrender.com"  // replace with actual frontend URL
   ],
   credentials: true
 }));
