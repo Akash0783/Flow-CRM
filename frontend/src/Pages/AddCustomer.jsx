@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../api";
-
+import Sidebar from "../Components/Sidebar";
+import Navbar from "../Components/Navbar";
 const AddCust = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,6 +32,10 @@ const AddCust = () => {
   };
 
   return (
+     <div className="flex h-screen bg-gray-100">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <Navbar />
     <div className="max-w-md mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg">
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Add Customer</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -73,6 +78,8 @@ const AddCust = () => {
           {loading ? "Adding..." : "Add Customer"}
         </button>
       </form>
+    </div>
+      </div>
     </div>
   );
 };
