@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
+import Navbar from "../Components/Navbar";
+import Sidebar from "../Components/Sidebar";
 
 // Reusable Card
 const ReportCard = ({ title, value, color }) => (
@@ -65,6 +67,10 @@ const AdminReports = () => {
   if (loading) return <p className="text-center mt-10">Loading Reports...</p>;
 
   return (
+     <div className="flex h-screen bg-gray-100">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <Navbar />
     <div className="flex-1 flex flex-col p-8 space-y-8">
       <h2 className="text-3xl font-bold text-gray-800">Admin Reports</h2>
 
@@ -78,6 +84,8 @@ const AdminReports = () => {
         <ReportCard title="Leads In Progress" value={stats.inProgressLeads} color="border-indigo-600" />
         <ReportCard title="Converted Leads" value={stats.convertedLeads} color="border-green-700" />
       </section>
+    </div>
+    </div>
     </div>
   );
 };

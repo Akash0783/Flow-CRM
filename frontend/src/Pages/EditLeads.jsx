@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
+import Navbar from "../Components/Navbar";
+import Sidebar from "../Components/Sidebar";
 
 const EditLead = () => {
   const { id } = useParams();
@@ -57,6 +59,10 @@ const EditLead = () => {
   if (loading) return <p className="text-center mt-4">Loading lead...</p>;
 
   return (
+     <div className="flex h-screen bg-gray-100">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <Navbar />
     <div className="bg-white shadow p-6 rounded-lg max-w-md mx-auto">
       <h1 className="text-xl font-bold mb-4">Edit Lead</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -108,6 +114,8 @@ const EditLead = () => {
           Update Lead
         </button>
       </form>
+    </div>
+    </div>
     </div>
   );
 };

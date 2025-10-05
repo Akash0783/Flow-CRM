@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api";
+import Navbar from "../Components/Navbar";
+import Sidebar from "../Components/Sidebar";
 
 const EditCustomer = () => {
   const { id } = useParams();
@@ -53,6 +55,10 @@ const EditCustomer = () => {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
+     <div className="flex h-screen bg-gray-100">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <Navbar />
     <div className="max-w-md mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Edit Customer</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -95,6 +101,8 @@ const EditCustomer = () => {
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </form>
+    </div>
+    </div>
     </div>
   );
 };

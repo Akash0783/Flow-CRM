@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import api from "../api";
 import { AuthContext } from "../Context/AuthContext";
+import Navbar from "../Components/Navbar";
+import Sidebar from "../Components/Sidebar";
 
 const AdminUsers = () => {
   const { token } = useContext(AuthContext);
@@ -51,6 +53,10 @@ const AdminUsers = () => {
   if (loading) return <p className="text-center mt-10">Loading Users...</p>;
 
   return (
+     <div className="flex h-screen bg-gray-100">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <Navbar />
     <div className="p-8 bg-gray-100 min-h-screen">
       <h2 className="text-2xl font-bold mb-6">Users Management</h2>
       <table className="min-w-full bg-white shadow rounded-lg overflow-hidden">
@@ -89,6 +95,8 @@ const AdminUsers = () => {
           ))}
         </tbody>
       </table>
+    </div>
+    </div>
     </div>
   );
 };
