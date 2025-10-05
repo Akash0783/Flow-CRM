@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import api from "../api";
-import { Edit, Loader, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
-import Loaders from "./Loaders";
+import Loader from "./Loaders";
 const Customers = () => {
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
@@ -57,7 +57,7 @@ const Customers = () => {
           </div>
 
           {loading ? (
-            <Loaders />
+            <Loader />
           ) : customers.length === 0 ? (
             <p className="text-gray-500">No Customers Found.</p>
           ) : (
