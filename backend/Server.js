@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: "https://68e1e0bd7a1a6429f789520e--aktrack.netlify.app", 
+    origin: "https://aktrack.netlify.app", 
     credentials: true,
 }));
 
