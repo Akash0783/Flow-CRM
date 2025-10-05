@@ -10,10 +10,8 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: [
-    "https://flow-crm-oiwd.onrender.com"  // replace with actual frontend URL
-  ],
-  credentials: true
+    origin: "https://68e1e0bd7a1a6429f789520e--aktrack.netlify.app", 
+    credentials: true,
 }));
 
 app.use(express.json()); // parse JSON bodies
