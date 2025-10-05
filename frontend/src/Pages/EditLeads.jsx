@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const EditLead = () => {
   const { id } = useParams();
@@ -30,7 +32,7 @@ const EditLead = () => {
         });
       } catch (err) {
         console.error("Error loading lead:", err.response?.data || err.message);
-        alert("Could not load lead");
+        toast.error("Could not load lead");
       } finally {
         setLoading(false);
       }
@@ -52,11 +54,11 @@ const EditLead = () => {
       navigate("/leads");
     } catch (err) {
       console.error("Update error:", err.response?.data || err.message);
-      alert("Update failed");
+      toast.error("Update failed");
     }
   };
 
-  if (loading) return <p className="text-center mt-4">Loading lead...</p>;
+  if (loading) return <Loader />;
 
   return (
      <div className="flex h-screen bg-gray-100">

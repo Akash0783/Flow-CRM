@@ -4,6 +4,8 @@ import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import api from "../api";
 import { Edit, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const Leads = () => {
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ const Leads = () => {
       setLeads((prev) => prev.filter((lead) => lead._id !== id));
     } catch (err) {
       console.error("Delete error:", err.response?.data || err.message);
-      alert("Delete Failed");
+      toast.error("Delete Failed");
     }
   };
 
@@ -72,7 +74,7 @@ const Leads = () => {
           </div>
 
           {loading ? (
-            <p className="text-gray-500">Loading Leads...</p>
+            <Loader />
           ) : leads.length === 0 ? (
             <p className="text-gray-500">No Leads found.</p>
           ) : (

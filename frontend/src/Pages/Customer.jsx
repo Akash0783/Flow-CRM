@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import api from "../api";
-import { Edit, Trash2 } from "lucide-react";
-
+import { Edit, Loader, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import Loaders from "./Loaders";
 const Customers = () => {
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
@@ -18,7 +19,7 @@ const Customers = () => {
         setCustomers(items);
       } catch (err) {
         console.error(err.response?.data || err.message);
-        alert("Could not load customers");
+        toast.error("Could not load customers");
       } finally {
         setLoading(false);
       }
@@ -35,7 +36,7 @@ const Customers = () => {
       setCustomers((prev) => prev.filter((c) => c._id !== id));
     } catch (err) {
       console.error(err.response?.data || err.message);
-      alert("Delete Failed");
+      toast.error("Delete Failed");
     }
   };
 
@@ -56,7 +57,7 @@ const Customers = () => {
           </div>
 
           {loading ? (
-            <p className="text-gray-500">Loading Customers...</p>
+            <Loaders />
           ) : customers.length === 0 ? (
             <p className="text-gray-500">No Customers Found.</p>
           ) : (

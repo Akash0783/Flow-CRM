@@ -1,7 +1,4 @@
 import { Routes, Route, Navigate} from "react-router-dom";
-import Sidebar from "./Components/Sidebar";
-import Navbar from "./Components/Navbar";
-import Dashboard from "./Pages/Dashboard";
 import Customer from "./Pages/Customer";
 import Invoices from "./Pages/Invoices";
 import Login from "./Pages/Login";
@@ -20,6 +17,7 @@ import UserDashboard from "./Pages/UserDashboard";
 import AdminDashboard from "./Pages/AdminDashboard";
 import AdminUsers from "./Pages/AdminUsers";
 import AdminReports from "./Pages/AdminReports";
+import {Toaster} from "react-hot-toast"
 
 function App() {
    const {user} = useContext(AuthContext)
@@ -61,6 +59,8 @@ function App() {
             
             {/* Default Redirect */}
              <Route path="*" element={<Login />} />
+
+            <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
        </Routes>
   );
 }

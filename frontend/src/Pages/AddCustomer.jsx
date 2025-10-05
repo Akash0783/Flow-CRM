@@ -2,6 +2,9 @@ import { useState } from "react";
 import api from "../api";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
+
 const AddCust = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,14 +21,14 @@ const AddCust = () => {
         { name, email, phone, company },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Customer Added Successfully");
+      toast.success("Customer Added Successfully");
       setName("");
       setEmail("");
       setPhone("");
       setCompany("");
     } catch (err) {
       console.error(err);
-      alert("Check Customer Details");
+      toast.error("Check Customer Details");
     } finally {
       setLoading(false);
     }
@@ -36,6 +39,11 @@ const AddCust = () => {
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-auto">
         <Navbar />
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <Loader />
+          </div>
+        ):(
     <div className="max-w-md mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg">
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Add Customer</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -79,6 +87,7 @@ const AddCust = () => {
         </button>
       </form>
     </div>
+  )}
       </div>
     </div>
   );

@@ -1,13 +1,16 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import api from "../api";
-
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate()
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -18,15 +21,21 @@ const Login = () => {
 
       // call context login
       login(res.data.user, res.data.token);
+      toast.success("Login Successfull")
+     if (res.data.user.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/user");
+    }
 
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.error || "Login failed");
+      toast.error(err.response?.data?.error || "Login failed");
     } finally {
       setLoading(false);
     }
   };
-
+  if(loading) return <Loader />
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 via-purple-100 to-pink-100">
       <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 overflow-hidden transform hover:scale-105 transition-transform duration-300">
@@ -66,7 +75,7 @@ const Login = () => {
             disabled={loading}
             className="w-full py-3 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white font-semibold rounded-2xl hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition disabled:opacity-50"
           >
-            {loading ? "Logging in..." : "Login"}
+            Login
           </button>
         </form>
 

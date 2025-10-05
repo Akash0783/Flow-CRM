@@ -4,6 +4,8 @@ import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import api from "../api";
 import { Edit, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const Invoices = () => {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const Invoices = () => {
       setInvoices((prev) => prev.filter((inv) => inv._id !== id));
     } catch (err) {
       console.error("Delete invoice error: ", err.response?.data || err.message);
-      alert("Delete Failed");
+      toast.error("Delete Failed");
     }
   };
 
@@ -69,7 +71,7 @@ const Invoices = () => {
           </div>
 
           {loading ? (
-            <p className="text-gray-500">Loading Invoices...</p>
+            <Loader />
           ) : invoices.length === 0 ? (
             <p className="text-gray-500">No invoices found.</p>
           ) : (

@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../api";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const EditInvoice = () => {
   const { id } = useParams();
@@ -44,7 +46,7 @@ const EditInvoice = () => {
         setCustomers(customerList);
       } catch (err) {
         console.error("Load invoice/customers error", err.response?.data || err.message);
-        alert("Failed to load invoice or customers");
+        toast.error("Failed to load invoice or customers");
         navigate("/invoices");
       } finally {
         setLoading(false);
@@ -66,17 +68,17 @@ const EditInvoice = () => {
       await api.put(`/invoices/${id}`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("Invoice updated successfully!");
+      toast.success("Invoice updated successfully!");
       navigate("/invoices");
     } catch (err) {
       console.error("Update error", err.response?.data || err.message);
-      alert("Update failed");
+      toast.error("Update failed");
     } finally {
       setSaving(false);
     }
   };
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading) return <Loader />;
 
   return (
      <div className="flex h-screen bg-gray-100">

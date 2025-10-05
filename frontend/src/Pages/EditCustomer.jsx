@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../api";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const EditCustomer = () => {
   const { id } = useParams();
@@ -24,7 +26,7 @@ const EditCustomer = () => {
         });
       } catch (err) {
         console.error("Load Customer error", err.response?.data || err.message);
-        alert("Could not load the customer");
+        toast.error("Could not load the customer");
         navigate("/customers");
       } finally {
         setLoading(false);
@@ -42,17 +44,17 @@ const EditCustomer = () => {
     setSaving(true);
     try {
       await api.put(`customers/${id}`, form);
-      alert("Customer Updated Successfully!");
+      toast.success("Customer Updated Successfully!");
       navigate("/customers");
     } catch (err) {
       console.error("Update error", err.response?.data || err.message);
-      alert("Update Failed");
+      toast.error("Update Failed");
     } finally {
       setSaving(false);
     }
   };
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading) return <Loader />;
 
   return (
      <div className="flex h-screen bg-gray-100">

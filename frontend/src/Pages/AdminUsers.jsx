@@ -3,6 +3,8 @@ import api from "../api";
 import { AuthContext } from "../Context/AuthContext";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const AdminUsers = () => {
   const { token } = useContext(AuthContext);
@@ -17,7 +19,7 @@ const AdminUsers = () => {
       setUsers(res.data.items ?? res.data ?? []);
     } catch (err) {
       console.error(err.response?.data || err.message);
-      alert("Failed to fetch users");
+      toast.error("Failed to fetch users");
     } finally {
       setLoading(false);
     }
@@ -26,11 +28,11 @@ const AdminUsers = () => {
   const updateRole = async (userId, newRole) => {
     try {
       await api.put(`/admin/users/${userId}/role`, { role: newRole }, { headers });
-      alert("Role updated");
+      toast.success("Role updated");
       fetchUsers(); // Refresh
     } catch (err) {
       console.error(err.response?.data || err.message);
-      alert("Failed to update role");
+      toast.error("Failed to update role");
     }
   };
 
@@ -38,11 +40,11 @@ const AdminUsers = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
       await api.delete(`/users/${userId}`, { headers });
-      alert("User deleted");
+      toast.success("User deleted");
       fetchUsers();
     } catch (err) {
       console.error(err.response?.data || err.message);
-      alert("Failed to delete user");
+      toast.error("Failed to delete user");
     }
   };
 
@@ -50,7 +52,7 @@ const AdminUsers = () => {
     fetchUsers();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading Users...</p>;
+  if (loading) return <Loader />;
 
   return (
      <div className="flex h-screen bg-gray-100">

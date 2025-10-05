@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 // Reusable Card
 const ReportCard = ({ title, value, color }) => (
@@ -55,7 +57,7 @@ const AdminReports = () => {
         });
       } catch (err) {
         console.error("Reports fetch error:", err.response?.data || err.message);
-        alert("Failed to load reports");
+        toast.error("Failed to load reports");
       } finally {
         setLoading(false);
       }
@@ -64,7 +66,7 @@ const AdminReports = () => {
     fetchReports();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading Reports...</p>;
+  if (loading) return <Loader />;
 
   return (
      <div className="flex h-screen bg-gray-100">

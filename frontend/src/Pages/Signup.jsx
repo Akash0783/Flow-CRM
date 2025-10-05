@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import api from "../api";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const Signup = () => {
   const { login } = useContext(AuthContext);
@@ -24,15 +26,16 @@ const Signup = () => {
 
       // ✅ Call context login
       login(loginRes.data.user, loginRes.data.token);
+      toast.success("Login Successfull")
 
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.error || "Signup failed");
+      toast.error(err.response?.data?.error || "Signup failed");
     } finally {
       setLoading(false);
     }
   };
-
+  if(loading) return <Loader />
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 via-purple-100 to-pink-100">
       <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 overflow-hidden transform hover:scale-105 transition-transform duration-300">
@@ -85,7 +88,7 @@ const Signup = () => {
             disabled={loading}
             className="w-full py-3 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white font-semibold rounded-2xl hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition disabled:opacity-50"
           >
-            {loading ? "Signing up..." : "Sign Up"}
+            SignUp
           </button>
         </form>
 

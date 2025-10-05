@@ -3,6 +3,8 @@ import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import api from "../api";
 import { AuthContext } from "../Context/AuthContext";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 // 🔹 Reusable Stat Card
 const StatCard = ({ title, value, borderColor, textColor }) => (
@@ -70,7 +72,7 @@ const AdminDashboard = () => {
         });
       } catch (err) {
         console.error("Admin dashboard fetch error:", err.response?.data || err.message);
-        alert("Failed to load dashboard data");
+        toast.error("Failed to load dashboard data");
       } finally {
         setLoading(false);
       }
@@ -79,7 +81,7 @@ const AdminDashboard = () => {
     fetchStats();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading Dashboard...</p>;
+  if (loading) return <Loader />;
 
   return (
     <div className="flex h-screen bg-gray-100">

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import api from "../api";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
+import toast from "react-hot-toast";
+import Loader from "./Loaders";
 
 const AddInvoice = () => {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const AddInvoice = () => {
         setCustomers(res.data.items ?? res.data ?? []);
       } catch (err) {
         console.error(err);
-        alert("Could not load customers");
+        toast.error("Could not load customers");
       } finally {
         setLoadingCustomers(false);
       }
@@ -66,7 +68,7 @@ const AddInvoice = () => {
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Add Invoice</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {loadingCustomers ? (
-          <p>Loading customers...</p>
+          <Loader />
         ) : (
           <select
             name="customer"
