@@ -10,10 +10,12 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: "https://aktrack.netlify.app", 
+    origin: ["https://aktrack.netlify.app", "http://localhost:3000"], // allow prod + local
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // explicitly allow methods
+    allowedHeaders: ["Content-Type", "Authorization"], // allow auth headers
     credentials: true,
 }));
-
+app.options("*", cors());
 app.use(express.json()); // parse JSON bodies
 
 // Connect to MongoDB Atlas
