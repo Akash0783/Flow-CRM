@@ -31,6 +31,8 @@ function App() {
     )
    }
   return (
+     <>
+         <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
          <Routes>
             {/* Login & Signup */} 
             <Route path="/login" element={<Login />} />
@@ -59,9 +61,8 @@ function App() {
             
             {/* Default Redirect */}
              <Route path="*" element={<Login />} />
-
-            <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
        </Routes>
+    </>   
   );
 }
 
